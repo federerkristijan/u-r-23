@@ -4,7 +4,9 @@ const DetailPage = () => {
   const router = useRouter();
 
   // extracting dynaimc params values
-  router.query.newsId;
+  const newsId = router.query.newsId;
+
+  console.log(router.query.newsId);
 
   return <div>DetailPage</div>;
 };
