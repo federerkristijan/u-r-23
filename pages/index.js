@@ -24,14 +24,26 @@ const HomePage = (props) => {
   )
 }
 
-// exectuted durign the build provess, never shown on client-side
-export const getStaticProps = async() => {
+// executed on the server on every request
+export const getServerSideProps = async(context) => {
+  const req = context.req;
+  const res = context.res;
+
   return {
     props: {
       meetups: dummy_meetups
-    },
-    revalidate: 10
+    }
   }
 }
+
+// exectuted during the build process, never shown on client-side
+// export const getStaticProps = async() => {
+//   return {
+//     props: {
+//       meetups: dummy_meetups
+//     },
+//     revalidate: 10
+//   }
+// }
 
 export default HomePage;
