@@ -1,9 +1,9 @@
 import React from 'react'
 
-const [meetupId] = () => {
+const MeetupDetail = () => {
   return (
-    <div>[meetupId]</div>
+    <div>MeetupDetail</div>
   )
 }
 
-export default [meetupId]
+export default MeetupDetail
