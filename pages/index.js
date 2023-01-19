@@ -18,9 +18,19 @@ const dummy_meetups = [
 ]
 
 const HomePage = (props) => {
+
   return (
-    <MeetupList meetups={dummy_meetups}/>
+    <MeetupList meetups={props.meetups}/>
   )
+}
+
+// exectuted durign the build provess, never shown on client-side
+export const getStaticProps = async() => {
+  return {
+    props: {
+      meetups: dummy_meetups
+    }
+  }
 }
 
 export default HomePage;
