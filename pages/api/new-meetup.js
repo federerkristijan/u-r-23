@@ -1,15 +1,29 @@
 import { MongoClient } from "mongodb";
 
-const password = env.process.NEXT_APP_MONGODB_PASSWORD;
+// const password = process.env.NEXT_APP_MONGODB_PASSWORD;
 
-const handler = (req, res) => {
-  if (req.method === 'POST') {
+const handler = async (req, res) => {
+  if (req.method === "POST") {
     const data = req.body;
 
-    const { title, image, address, description } = data;
+    // already destructured in the result
+    // const { title, image, address, description } = data;
 
-    MongoClient.connect('mongodb+srv://kfederer:{password}@cluster0.xa99u.mongodb.net/meetups?retryWrites=true&w=majority');
+    const client = await MongoClient.connect(
+      "mongodb+srv://kfederer:${process.env.MONGODB_PASSWORD}@cluster0.xa99u.mongodb.net/meetups?retryWrites=true&w=majority"
+    );
+    const db = client.db();
+
+    const meetupsCollection = db.collection('meetups');
+
+    const result = await meetupsCollection.insertOne(data);
+
+    console.log(result);
+
+    client.close();
+
+    res.status(201).json({ message: 'Meetup inserted!' });
   }
-}
+};
 
-export default handler
+export default handler;
