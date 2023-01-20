@@ -1,6 +1,7 @@
 import MeetupDetail from "components/meetups/MeetupDetail";
 
 const MeetupDetails = () => {
+
   return (
     <MeetupDetail
       image="https://www.berlinerbaeder.de/fileadmin/_processed_/3/4/csm_5_strandbad_wannsee_1840x860px_428ed79620.jpg"
@@ -11,12 +12,17 @@ const MeetupDetails = () => {
   );
 };
 
-export const getStaticProps = async() => {
+export const getStaticProps = async(context) => {
+
+  const meetupId = context.params.meetupId;
+
+  console.log(meetupId)
+
   return {
     props: {
       meetupData: {
         image: "https://www.berlinerbaeder.de/fileadmin/_processed_/3/4/csm_5_strandbad_wannsee_1840x860px_428ed79620.jpg",
-        id: 'm1',
+        id: meetupId,
         title: "1st Meetup",
         address: 'S Wannsee',
         description: "this is 1st meetup"
