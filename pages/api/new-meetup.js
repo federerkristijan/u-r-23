@@ -1,11 +1,10 @@
 import { MongoClient } from "mongodb";
 
+import Client from "./client";
+
 const handler = async (req, res) => {
   if (req.method === "POST") {
     const data = req.body;
-
-    // already destructured in the result
-    // const { title, image, address, description } = data;
 
     const client = await MongoClient.connect(
       "mongodb+srv://kfederer:TbCJTe1k2kKEX2ZM@cluster0.7l67fin.mongodb.net/?retryWrites=true&w=majority"
