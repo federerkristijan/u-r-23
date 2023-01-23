@@ -1,32 +1,36 @@
+import { MongoClient, ObjectId } from "mongodb";
+
 import MeetupDetail from "components/meetups/MeetupDetail";
 
-const MeetupDetails = () => {
+const MeetupDetails = (props) => {
   return (
     <MeetupDetail
-      image="https://www.berlinerbaeder.de/fileadmin/_processed_/3/4/csm_5_strandbad_wannsee_1840x860px_428ed79620.jpg"
-      title="1st Meetup"
-      address="S Wannsee"
-      description="this is 1st meetup"
+      image={props.meetupData.image}
+      title={props.meetupData.title}
+      address={props.meetupData.address}
+      description={props.meetupData.description}
     />
   );
 };
 
 // fallback: false - paths are defined, if not 404. else path are dynamically pregenerated
 export const getStaticPaths = async () => {
+  const client = await MongoClient.connect(
+    `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.7l67fin.mongodb.net/?retryWrites=true&w=majority`
+  )
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
+
+  client.close();
+
   return {
     fallback: false,
-    paths: [
-      {
-        params: {
-          meetupId: "m1",
-        },
-      },
-      {
-        params: {
-          meetupId: "m2",
-        },
-      },
-    ],
+    paths: meetups.map((meetup) => ({
+      params: { meetupId: meetup._id.toString() },
+    })),
   };
 };
 
@@ -36,16 +40,28 @@ export const getStaticProps = async (context) => {
 
   console.log(meetupId);
 
+  // const client = await MongoClient.connect(
+  //   "mongodb+srv://" + process.env.MONGODB_USERNAME + ":" + process.env.MONGODB_PASSWORD + "@cluster0.7l67fin.mongodb.net/?retryWrites=true&w=majority"
+  // );
+  const client = await MongoClient.connect(
+    `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.7l67fin.mongodb.net/?retryWrites=true&w=majority`
+  )
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  const selectedMeetup = await meetupsCollection.findOne({ _id: ObjectId(meetupId) });
+
+  client.close();
+
   return {
     props: {
       meetupData: {
-        image:
-          "https://www.berlinerbaeder.de/fileadmin/_processed_/3/4/csm_5_strandbad_wannsee_1840x860px_428ed79620.jpg",
-        id: meetupId,
-        title: "1st Meetup",
-        address: "S Wannsee",
-        description: "this is 1st meetup",
-      },
+        id: selectedMeetup._id.toString(),
+        title: selectedMeetup.title,
+        image: selectedMeetup.image,
+        description: selectedMeetup.description
+      }
     },
   };
 };
