@@ -9,6 +9,7 @@ const HomePage = (props) => {
     <Fragment>
       <Head>
         <title>Meetups</title>
+        <meta name="description" content="Learning Next.js" />
       </Head>
       <MeetupList meetups={props.meetups} />;
     </Fragment>
