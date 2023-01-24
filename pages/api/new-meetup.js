@@ -1,13 +1,11 @@
 import { Admin, MongoClient } from "mongodb";
 
-import Client from "./client";
-
 const handler = async (req, res) => {
   if (req.method === "POST") {
     const data = req.body;
 
     const client = await MongoClient.connect(
-      "mongodb+srv://kfederer:Xt8NhMqeQAsByX7Y@cluster0.7l67fin.mongodb.net/?retryWrites=true&w=majority"
+      `mongodb+srv://kfederer:${process.env.MONGODB_PASSWORD}@cluster0.7l67fin.mongodb.net/?retryWrites=true&w=majority`
     );
     const db = client.db();
 

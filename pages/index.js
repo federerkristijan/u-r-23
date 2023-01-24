@@ -31,7 +31,7 @@ const HomePage = (props) => {
 // exectuted during the build process, never shown on client-side
 export const getStaticProps = async () => {
   const client = await MongoClient.connect(
-    "mongodb+srv://kfederer:Xt8NhMqeQAsByX7Y@cluster0.7l67fin.mongodb.net/?retryWrites=true&w=majority"
+    `mongodb+srv://kfederer:${process.env.MONGODB_PASSWORD}@cluster0.7l67fin.mongodb.net/?retryWrites=true&w=majority`
   );
   const db = client.db();
 

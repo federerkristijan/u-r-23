@@ -24,7 +24,7 @@ const MeetupDetails = (props) => {
 // fallback: false - paths are defined, if not 404. else path are dynamically pregenerated
 export const getStaticPaths = async () => {
   const client = await MongoClient.connect(
-    "mongodb+srv://kfederer:Xt8NhMqeQAsByX7Y@cluster0.7l67fin.mongodb.net/?retryWrites=true&w=majority"
+    `mongodb+srv://kfederer:${process.env.MONGODB_PASSWORD}@cluster0.7l67fin.mongodb.net/?retryWrites=true&w=majority`
   );
   const db = client.db();
 
