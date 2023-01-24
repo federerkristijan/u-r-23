@@ -27,7 +27,7 @@ const NewMeetupPage = () => {
   return (
     <Fragment>
       <Head>
-        <title>Add a newmeetup</title>
+        <title>Add a new meetup</title>
         <meta
           name="description"
           content="Learning Next.js and connecting people"
