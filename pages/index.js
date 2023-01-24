@@ -5,11 +5,14 @@ import { Fragment } from "react";
 import MeetupList from "components/meetups/MeetupList";
 
 const HomePage = (props) => {
-  return;
-  <Fragment>
-    <Head></Head>
-    <MeetupList meetups={props.meetups} />;
-  </Fragment>;
+  return (
+    <Fragment>
+      <Head>
+        <title>Meetups</title>
+      </Head>
+      <MeetupList meetups={props.meetups} />;
+    </Fragment>
+  );
 };
 
 // executed on the server on every request
