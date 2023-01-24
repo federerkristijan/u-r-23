@@ -13,6 +13,8 @@
 /.next/
 /out/
 /api/new-meetup.js
+/[meetupId]/index.js
+/pages/index.js
 
 
 # production
