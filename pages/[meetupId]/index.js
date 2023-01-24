@@ -2,14 +2,14 @@ import { MongoClient, ObjectId } from "mongodb";
 import { Fragment } from "react";
 import Head from "next/head";
 
-
 import MeetupDetail from "components/meetups/MeetupDetail";
 
 const MeetupDetails = (props) => {
   return (
     <Fragment>
       <Head>
-        <title></title>
+        <title>{props.meetupData.title}</title>
+        <meta name="description" content={props.meetupData.description} />
       </Head>
       <MeetupDetail
         image={props.meetupData.image}
@@ -53,12 +53,14 @@ export const getStaticProps = async (context) => {
   // );
   const client = await MongoClient.connect(
     `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.7l67fin.mongodb.net/?retryWrites=true&w=majority`
-  )
+  );
   const db = client.db();
 
   const meetupsCollection = db.collection("meetups");
 
-  const selectedMeetup = await meetupsCollection.findOne({ _id: ObjectId(meetupId) });
+  const selectedMeetup = await meetupsCollection.findOne({
+    _id: ObjectId(meetupId),
+  });
 
   client.close();
 
@@ -68,8 +70,8 @@ export const getStaticProps = async (context) => {
         id: selectedMeetup._id.toString(),
         title: selectedMeetup.title,
         image: selectedMeetup.image,
-        description: selectedMeetup.description
-      }
+        description: selectedMeetup.description,
+      },
     },
   };
 };
